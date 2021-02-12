@@ -41,12 +41,6 @@ public class CoinController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // Allow user to remove coins from piggy bank
-    // uses route param for amount
-    // prevents user from removing more than is present
-    // removes and update the appropriate fields
-    // logs updated amounts, using $ for dollars
-    // if money cannnot be removed, log Money not available
 
     // Returns HTTP status OK
     //http://localhost:2019/money/{amount}
@@ -61,12 +55,27 @@ public class CoinController
         if (!isEnoughFunds)
         {
             System.out.println("Money not available");
-
         }
         else
         {
-            System.out.println("Working on your transaction...");
+            // remove money from piggy bank
+           HelperFunctions.removeMoney(amount, piggyBank);
+
+           double updatedValue = 0;
+           for (Coin c : piggyBank)
+            {
+                if (c.getQuantity() > 0)
+                {
+                    String formattedData = HelperFunctions.formatWithdrawal(c);
+                    System.out.println(formattedData);
+                }
+                updatedValue += c.getQuantity() * c.getValue();
+            }
+            System.out.println("The piggy bank holds $" + updatedValue);
+
         }
+        // convert ArrayList back into iterable
+        coinRepository.saveAll(piggyBank);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
