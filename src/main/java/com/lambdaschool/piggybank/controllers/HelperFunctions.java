@@ -2,6 +2,8 @@ package com.lambdaschool.piggybank.controllers;
 
 import com.lambdaschool.piggybank.models.Coin;
 
+import java.util.List;
+
 public class HelperFunctions
 {
     public static String formatData(Coin c){
@@ -20,5 +22,23 @@ public class HelperFunctions
             rtnString += c.getName();
         }
         return rtnString;
+    }
+
+    public static boolean checkFunds(double amount, List<Coin> piggyBank)
+    {
+        double totalFunds = 0;
+        for (Coin c : piggyBank)
+        {
+            totalFunds += c.getQuantity() * c.getValue();
+        }
+
+        if (amount < totalFunds)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -37,6 +38,35 @@ public class CoinController
         System.out.println("The piggy bank holds " + value);
 
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // Allow user to remove coins from piggy bank
+    // uses route param for amount
+    // prevents user from removing more than is present
+    // removes and update the appropriate fields
+    // logs updated amounts, using $ for dollars
+    // if money cannnot be removed, log Money not available
+
+    // Returns HTTP status OK
+    //http://localhost:2019/money/{amount}
+    @GetMapping(value="/money/{amount}", produces = {"application/json"})
+    public ResponseEntity<?> removeMoney(@PathVariable double amount)
+    {
+        List<Coin> piggyBank = new ArrayList<>();
+        coinRepository.findAll().iterator().forEachRemaining(piggyBank::add);
+
+        // check to see if amount exceed funds
+        boolean isEnoughFunds = HelperFunctions.checkFunds(amount, piggyBank);
+        if (!isEnoughFunds)
+        {
+            System.out.println("Money not available");
+
+        }
+        else
+        {
+            System.out.println("Working on your transaction...");
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
