@@ -39,12 +39,12 @@ public class CoinController
         }
         System.out.println("The piggy bank holds " + df.format(value));
 
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
     // Returns HTTP status OK
+    // logs Money not available or updated contents of piggy bank
+    // accepts a route param form money amount to withdrawal
     //http://localhost:2019/money/{amount}
     @GetMapping(value="/money/{amount}", produces = {"application/json"})
     public ResponseEntity<?> removeMoney(@PathVariable double amount)
@@ -76,7 +76,7 @@ public class CoinController
             System.out.println("The piggy bank holds " + df.format(updatedValue));
 
         }
-        // convert ArrayList back into iterable
+        // update db with new amounts
         coinRepository.saveAll(piggyBank);
         return new ResponseEntity<>(HttpStatus.OK);
     }
