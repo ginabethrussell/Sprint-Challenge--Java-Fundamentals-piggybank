@@ -82,4 +82,16 @@ public class Coin
     {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Coin{" +
+            "coinid=" + coinid +
+            ", name='" + name + '\'' +
+            ", nameplural='" + nameplural + '\'' +
+            ", value=" + value +
+            ", quantity=" + quantity +
+            '}';
+    }
 }
