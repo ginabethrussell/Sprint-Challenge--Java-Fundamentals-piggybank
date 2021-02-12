@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class CoinController
     @Autowired
     CoinRepository coinRepository;
 
+    private static DecimalFormat df = new DecimalFormat("$#,##0.00");
     //Routes
     // Prints the contents of the Piggy Bank to the console
     // Returns HTTP status OK
@@ -35,7 +37,7 @@ public class CoinController
             System.out.println(formattedData);
             value += c.getQuantity() * c.getValue();
         }
-        System.out.println("The piggy bank holds " + value);
+        System.out.println("The piggy bank holds " + df.format(value));
 
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -71,7 +73,7 @@ public class CoinController
                 }
                 updatedValue += c.getQuantity() * c.getValue();
             }
-            System.out.println("The piggy bank holds $" + updatedValue);
+            System.out.println("The piggy bank holds " + df.format(updatedValue));
 
         }
         // convert ArrayList back into iterable
