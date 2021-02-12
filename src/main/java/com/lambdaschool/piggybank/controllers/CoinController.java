@@ -26,12 +26,16 @@ public class CoinController
     {
         List<Coin> coinList = new ArrayList<>();
         coinRepository.findAll().iterator().forEachRemaining(coinList::add);
+        // create accumulator for total value
+        double value = 0;
         for (Coin c : coinList)
         {
-//            System.out.println(c);
             String formattedData = HelperFunctions.formatData(c);
             System.out.println(formattedData);
+            value += c.getQuantity() * c.getValue();
         }
+        System.out.println("The piggy bank holds " + value);
+
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
