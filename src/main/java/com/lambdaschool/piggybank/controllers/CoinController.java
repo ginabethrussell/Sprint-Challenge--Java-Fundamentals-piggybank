@@ -28,7 +28,9 @@ public class CoinController
         coinRepository.findAll().iterator().forEachRemaining(coinList::add);
         for (Coin c : coinList)
         {
-            System.out.println(c);
+//            System.out.println(c);
+            String formattedData = HelperFunctions.formatData(c);
+            System.out.println(formattedData);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
